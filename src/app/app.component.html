@@ -1,0 +1,160 @@
+<div class="container">
+  <form [formGroup]="profileForm" (submit)="dataSubmit()">
+  <div class="row">
+    <div class="col-lg-6" >
+      <label for="name">Enter your Name</label>
+      <input type="text" name="name" class="form-control" formControlName="username" [ngClass]="{'has-error':profileForm.get('username').dirty  && !profileForm.get('username').valid,'has-noerror':profileForm.get('username').valid}">
+      <span class="has-errortag" *ngIf="!profileForm.get('username').valid && profileForm.get('username').dirty">Please enter a name</span>
+      </div>
+      <!-- <div [ngClass]="{'has-error':profileForm.get('username').errors && profileForm.get('username').touched||profileForm.get('username').dirty}">
+       </div> -->
+
+      <div class="col-lg-6">
+        <label for="mail" >Enter your mail</label>
+        <input type="mail" name="mail" class="form-control" formControlName="mail" [ngClass]="{'has-error':profileForm.get('mail').dirty  && !profileForm.get('mail').valid,'has-noerror':profileForm.get('mail').valid}">
+          <span class="has-errortag" *ngIf="!profileForm.get('mail').valid && profileForm.get('mail').dirty">Please enter a valid mail</span>
+        </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <label for="favcolor" >Enter your Mobile Number</label>
+            <input type="text" name="favcolor" class="form-control" formControlName="phone" [ngClass]="{'has-error':!profileForm.get('phone').valid && profileForm.get('phone').dirty,'has-noerror':profileForm.get('phone').valid}">
+              <span class="has-errortag" *ngIf="profileForm.get('phone').errors && !profileForm.get('phone').valid && profileForm.get('phone').dirty">Please enter your Mobile No (10 digits)</span>
+              <!-- <span  class="has-errortag"  *ngIf="profileForm.get('phone').errors.pattern  && !profileForm.get('phone').valid" >Please, Enter 10 digit Mobile Number.</span> -->
+            </div>
+            </div>
+
+        <div class="row">
+        <div class="col-lg-6">
+          <label for="pass">Enter your Password</label>
+          <input type="password" name="pass" class="form-control" formControlName="pass" [ngClass]="{'has-error':profileForm.get('pass').dirty  && !profileForm.get('pass').valid,'has-noerror':profileForm.get('pass').valid}">
+          <span class="has-errortag" *ngIf="!profileForm.get('pass').valid && profileForm.get('pass').dirty">Please enter a password (6 chars min)</span>
+            </div>
+
+
+          <div class="col-lg-6">
+            <label for="confPass">Renter your Password</label>
+            <input type="password" name="confPass" class="form-control" formControlName="confPass" [ngClass]="{'has-error':profileForm.get('confPass').dirty  && !profileForm.get('confPass').valid,'has-noerror':profileForm.get('confPass').valid}">
+            <span class="has-errortag" *ngIf="!profileForm.get('confPass').valid && profileForm.get('confPass').dirty">Please enter a confirm Password</span>
+            <span  class="has-errortag" *ngIf="profileForm.get('pass').value!=profileForm.get('confPass').value && profileForm.get('confPass').dirty">Password doesn't match</span>
+            </div>
+            </div>
+
+
+        <div class="row mt-4" id="gender">
+          <div class="col-lg-2">
+          <h5>Gender</h5>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" aria-label="Radio button" value="male" formControlName="gender" >
+            <label class="form-check-label" for="male">Male</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" aria-label="Radio button" value="female" formControlName="gender" [ngClass]="{'has-error':!profileForm.get('gender').valid ,'has-noerror':profileForm.get('gender').valid}">
+            <label class="form-check-label" for="female">Female</label>
+            </div>
+            <span class="has-errortag" *ngIf="!profileForm.get('gender').valid && profileForm.get('gender').dirty">Select gender</span>
+
+
+            <div class="col-lg-2">
+            <h5>Martial Status</h5>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" aria-label="Radio button" value="single" formControlName="status" >
+              <label class="form-check-label" for="single">Single</label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" aria-label="Radio button" value="Married" formControlName="status" [ngClass]="{'has-error':!profileForm.get('status').valid ,'has-noerror':profileForm.get('status').valid}">
+              <label class="form-check-label" for="Married">Married</label>
+              </div>
+                <span class="has-errortag" *ngIf="!profileForm.get('status').valid && profileForm.get('status').dirty">Select status</span>
+            </div>
+
+            <div class="row">
+                  <div class="col-lg-12">
+                <div *ngFor="let item of profileForm.get('address')['controls']; index as i" formArrayName="address">
+                    <div [formGroupName]="i">
+                      <hr>
+
+                      <div class="row">
+                  <div class="col-lg-4">
+                      <label for="add1">Address Line 1</label>
+                      <input type="text" class="form-control" formControlName="addressLine1">
+
+
+                      </div>
+
+                  </div>
+                  <div class="row">
+                  <div class="col-lg-4">
+                      <label for="add1">Address Line2</label>
+                      <input type="text" class="form-control" formControlName="addressLine2">
+
+                  </div>
+                  </div>
+                  <div class="row">
+                  <div class="col-lg-4">
+                      <label for="add1">Zip</label>
+                      <input type="text" class="form-control" formControlName="zip">
+
+                        </div>
+                  </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="country">Country</label>
+
+                                <select formControlName="country" class="form-control">
+                                  <option *ngFor="let item of countryList" [value]="item">{{countries[item].name}}</option>
+                                </select>
+
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="state">state</label>
+
+                                <select formControlName="state" class="form-control">
+                                  <option *ngFor="let item of stateList[i]" [value]="item.code">{{item.name}}</option>
+                              </select>
+
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="city">city</label>
+
+                                <select formControlName="city" class="form-control">
+                                  <option *ngFor="let item of cityList[i]" [value]="item.code">{{item.name}}</option>
+                               </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="row">
+                  <div class="col-lg-12">
+
+                    <label for="favfood" >Enter your Favourite food</label>
+                    <input type="text" name="favfood" class="form-control" formControlName="favfood" [ngClass]="{'has-error': profileForm.get('favfood').dirty && !profileForm.get('favfood').valid,'has-noerror':profileForm.get('favfood').valid}">
+                      <span class="has-errortag" *ngIf="!profileForm.get('favfood').valid && profileForm.get('favfood').dirty">Please enter your favourite Food</span>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <label for="favcolor" >Enter your Favourite color</label>
+                        <input type="text" name="favcolor" class="form-control" formControlName="favcolor" [ngClass]="{'has-error':profileForm.get('favcolor').errors && profileForm.get('favcolor').dirty && !profileForm.get('favcolor').valid,'has-noerror':profileForm.get('favcolor').valid}">
+                          <span class="has-errortag" *ngIf="!profileForm.get('favcolor').valid && profileForm.get('favcolor').dirty">Please enter your Favourite Color</span>
+                        </div>
+                        </div>
+
+                        <div class="row mt-4">
+                          <div class="col-lg-12 text-center">
+
+                            <input type="submit" class="btn btn-primary" [disabled]="!profileForm.valid">
+                            </div>
+                            </div>
+                        </form>
+      </div>
+<router-outlet></router-outlet>
